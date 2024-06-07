@@ -1,0 +1,20 @@
+<h1>Mon Portfeuille</h1>
+
+<div class="search-area"  data-controller="return-search">
+  <h3>Recherche</h3>
+  <%= form_tag search_stock_path, data: {return_search_target: "form", action: "submit->return-search#send"}, method: :get do%>
+    <div class="form_group row">
+      <div class="col-sm-9 no-right-padding">
+        <%= text_field_tag :stock, params[:stock], placeholder: "Symbole d'action", autofocus: true, class:"form-control form-control-lg"%>
+      </div>
+      <div class="col-sm-3 no-left-padding">
+        <%= button_tag type: :submit, class:"btn btn-success btn-lg" do  %>
+          <i class="fa-solid fa-magnifying-glass" style="color: #fcfcfc;"></i>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <% if @stock %>
+    <%= render 'users/result'  %>
+  <% end %>
+</div>
