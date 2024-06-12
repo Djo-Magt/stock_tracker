@@ -1,0 +1,29 @@
+  <div class="row mt-5">
+    <div class="col-9">
+        <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @friends.each do |friend|  %>
+            <tr>
+              <th scope="row"><%= friend.email %></th>
+              <td><%= friend.first_name %></td>
+              <td><%= friend.last_name %></td>
+              <td>
+                <%= link_to "Unfollow", '#',
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "btn btn-sm btn-danger"
+                %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

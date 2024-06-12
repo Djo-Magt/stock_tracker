@@ -1,0 +1,21 @@
+  <h1>Mes Amis</h1>
+
+  <%= form_tag my_friends_path, method: :get do%>
+    <div class="form_group row">
+      <div class="col-sm-9 no-right-padding">
+        <%= text_field_tag :query, params[:query], placeholder: "Rechercher un amis", autofocus: true, class:"form-control form-control-lg"%>
+      </div>
+      <div class="col-sm-3 no-left-padding">
+        <%= button_tag type: :submit, class:"btn btn-success btn-lg" do  %>
+          <i class="fa-solid fa-magnifying-glass" style="color: #fcfcfc;"></i>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @users%>
+    <%= render 'users/friends'  %>
+  <% end %>
+  <% if !@friends.empty? %>
+    <%= render 'friends/list'  %>
+  <% end %>

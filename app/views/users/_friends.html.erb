@@ -1,0 +1,27 @@
+
+    <div class="card card-header results-block">
+      <table class="col-md-12">
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><strong>Email: </strong> <%= user.email %></td>
+              <td><strong>Prenom: </strong> <%= user.first_name %></td>
+              <td><strong>Nom: </strong> <%= user.last_name %></td>
+              <td>
+                <strong>Actions: </strong>
+                <%= link_to "Profil", '#',
+                  class: "btn btn-sm btn-success"
+                %>
+                <% if current_user.not_friends_with?(user.id) %>
+                <%= link_to "follow", '#',
+                  class: "btn btn-sm btn-success"
+                %>
+                <% else %>
+                  <span class="badge badge-secondary">Already friend</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
