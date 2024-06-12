@@ -2,6 +2,11 @@ require 'net/http'
 require 'json'
 
 class Stock < ApplicationRecord
+  has_many :user_stocks
+  has_many :users, through: :user_stocks
+
+  validates :name, :ticker, presence: true
+
   BASE_URI = 'https://www.alphavantage.co'
 
   def self.company_lookup(ticker_symbol)
@@ -11,6 +16,7 @@ class Stock < ApplicationRecord
 
   def self.new_lookup(ticker_symbol)
     response = get("/query?function=GLOBAL_QUOTE&symbol=#{ticker_symbol}&apikey=#{ENV['API_KEY']}")
+
     if response.is_a?(Net::HTTPSuccess)
       quote = JSON.parse(response.body)['Global Quote']
       if quote
@@ -19,6 +25,10 @@ class Stock < ApplicationRecord
         new(ticker: ticker_symbol, name: name, last_price: last_price)
       end
     end
+  end
+
+  def self.check_db(ticker_symbol)
+    Stock.where(ticker: ticker_symbol).first
   end
 
   private

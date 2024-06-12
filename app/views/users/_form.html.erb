@@ -1,8 +1,4 @@
-<h1>Mon Portfeuille</h1>
-
-<div class="search-area container"  data-controller="return-search">
-  <h3>Recherche</h3>
-  <%= form_tag search_stock_path, data: {return_search_target: "form", action: "submit->return-search#send"}, method: :get do%>
+  <%= form_tag search_stock_path, method: :get do%>
     <div class="form_group row">
       <div class="col-sm-9 no-right-padding">
         <%= text_field_tag :stock, params[:stock], placeholder: "Symbole d'action", autofocus: true, class:"form-control form-control-lg"%>
@@ -14,11 +10,3 @@
       </div>
     </div>
   <% end %>
-  <% if @stock %>
-    <%= render 'users/result'  %>
-  <% end %>
-
-  <% if !@tracked_stocks.empty? %>
-    <%= render 'stocks/list'  %>
-  <% end %>
-</div>
