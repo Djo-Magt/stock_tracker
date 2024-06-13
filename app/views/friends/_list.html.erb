@@ -16,9 +16,12 @@
               <td><%= friend.first_name %></td>
               <td><%= friend.last_name %></td>
               <td>
-                <%= link_to "Unfollow", '#',
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                    class: "btn btn-sm btn-danger"
+                <%= link_to "Profil", user_path(friend),
+                    class: "btn btn-success btn-sm"
+                %>
+                <%= link_to "Unfollow", friendship_path(friend),
+                    data: { turbo_method: :delete},
+                    class: "btn btn-warning btn-sm"
                 %>
               </td>
             </tr>

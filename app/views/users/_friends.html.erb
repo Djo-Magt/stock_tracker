@@ -9,13 +9,13 @@
               <td><strong>Nom: </strong> <%= user.last_name %></td>
               <td>
                 <strong>Actions: </strong>
-                <%= link_to "Profil", '#',
+                <%= link_to "Profil", user_path(user),
                   class: "btn btn-sm btn-success"
                 %>
                 <% if current_user.not_friends_with?(user.id) %>
-                <%= link_to "follow", '#',
-                  class: "btn btn-sm btn-success"
-                %>
+                  <%= button_to "follow", friendships_path(friend_id: user.id),
+                    class: "btn btn-sm btn-success", method: :post
+                  %>
                 <% else %>
                   <span class="badge badge-secondary">Already friend</span>
                 <% end %>
