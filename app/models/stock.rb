@@ -17,13 +17,24 @@ class Stock < ApplicationRecord
   def self.new_lookup(ticker_symbol)
     response = get("/query?function=GLOBAL_QUOTE&symbol=#{ticker_symbol}&apikey=#{ENV['API_KEY']}")
 
-    if response.is_a?(Net::HTTPSuccess)
+        if response.is_a?(Net::HTTPSuccess)
       quote = JSON.parse(response.body)['Global Quote']
-      if quote
+      if quote && quote['05. price']
         last_price = quote['05. price']
         name = company_lookup(ticker_symbol)
-        new(ticker: ticker_symbol, name: name, last_price: last_price)
+        if name
+          new(ticker: ticker_symbol, name: name, last_price: last_price)
+        else
+          Rails.logger.error "Failed to fetch company name for ticker: #{ticker_symbol}"
+          nil
+        end
+      else
+        Rails.logger.error "Quote data not found for ticker: #{ticker_symbol}"
+        nil
       end
+    else
+      Rails.logger.error "Stock lookup failed for ticker: #{ticker_symbol}"
+      nil
     end
   end
 

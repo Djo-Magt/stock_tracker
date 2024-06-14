@@ -4,7 +4,12 @@ class UserStocksController < ApplicationController
     stock = Stock.check_db(params[:ticker])
     if stock.blank?
       stock = Stock.new_lookup(params[:ticker])
-      stock.save
+      if stock.save
+        flash[:notice] = "Stock #{stock.name} added"
+      else
+        flash[:alert] = "There was an error saving the stock"
+        redirect_to my_portfolio_path and return
+      end
     end
     @user_stock = UserStock.create(user: current_user, stock: stock)
     flash[:notice] = "Stock #{stock.name} ajouté"
